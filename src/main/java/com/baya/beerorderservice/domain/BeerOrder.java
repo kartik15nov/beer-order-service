@@ -15,7 +15,6 @@ import java.util.Set;
 @Setter
 @Getter(AccessLevel.PROTECTED)
 @NoArgsConstructor
-@Builder
 public class BeerOrder extends BaseEntity {
 
     @ManyToOne

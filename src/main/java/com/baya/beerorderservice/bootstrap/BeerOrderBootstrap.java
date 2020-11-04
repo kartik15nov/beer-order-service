@@ -27,7 +27,7 @@ public class BeerOrderBootstrap implements CommandLineRunner {
     private void loadCustomerData() {
         if (customerRepository.count() == 0) {
             customerRepository
-                    .save(Customer.builder()
+                    .save(Customer.customerBuilder()
                     .customerName(TASTING_ROOM)
                     .apiKey(UUID.randomUUID())
                     .build());

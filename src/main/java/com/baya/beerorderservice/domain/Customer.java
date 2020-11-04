@@ -26,7 +26,7 @@ public class Customer extends BaseEntity {
     @OneToMany(mappedBy = "customer")
     private Set<BeerOrder> beerOrders;
 
-    @Builder
+    @Builder(builderMethodName = "customerBuilder")
     public Customer(UUID id, Long version, Timestamp createdDate, Timestamp lastModifiedDate, String customerName, UUID apiKey, Set<BeerOrder> beerOrders) {
         super(id, version, createdDate, lastModifiedDate);
         this.customerName = customerName;
