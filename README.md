@@ -1,3 +1,4 @@
+[![CircleCI](https://circleci.com/gh/kartik15nov/beer-order-service.svg?style=svg)](https://circleci.com/gh/kartik15nov/beer-order-service)
 # beer-order-service
 
 # Default Port Mappings - For Single Host
