@@ -1,6 +1,6 @@
 package com.ub.beerOrderService.web.controller;
 
-import com.ub.beerOrderService.services.BeerOrderService;
+import com.ub.beerOrderService.services.beerOrderService.BeerOrderService;
 import com.ub.beerOrderService.web.model.BeerOrderDto;
 import com.ub.beerOrderService.web.model.BeerOrderPagedList;
 import lombok.RequiredArgsConstructor;

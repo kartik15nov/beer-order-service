@@ -4,6 +4,7 @@ import com.ub.beerOrderService.bootstrap.BeerOrderBootStrap;
 import com.ub.beerOrderService.domain.Customer;
 import com.ub.beerOrderService.repositories.BeerOrderRepository;
 import com.ub.beerOrderService.repositories.CustomerRepository;
+import com.ub.beerOrderService.services.beerOrderService.BeerOrderService;
 import com.ub.beerOrderService.web.model.BeerOrderDto;
 import com.ub.beerOrderService.web.model.BeerOrderLineDto;
 import lombok.RequiredArgsConstructor;

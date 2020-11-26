@@ -1,4 +1,4 @@
-package com.ub.beerOrderService.services;
+package com.ub.beerOrderService.services.beerOrderService;
 
 import com.ub.beerOrderService.domain.BeerOrder;
 import com.ub.beerOrderService.domain.Customer;
