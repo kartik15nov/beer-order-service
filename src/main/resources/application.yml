@@ -1,0 +1,20 @@
+logging:
+  level:
+    com.ub: debug
+server:
+  port: 8081
+
+com:
+  ub:
+    beer-service-host: http://localhost:8080
+
+spring:
+  datasource:
+    initialization-mode: embedded
+    url: jdbc:h2:mem:testdb;MODE=MYSQL
+  h2:
+    console:
+      enabled: true
+  cache:
+    jcache:
+      config: classpath:ehcache.xml
