@@ -1,0 +1,7 @@
+package com.ub.beerOrderService.domain;
+
+public enum BeerOrderEventEnum {
+    VALIDATE_ORDER,VALIDATE_PASSED,VALIDATION_FAILED,
+    ALLOCATION_SUCCESS, ALLOCATION_NO_INVENTORY, ALLOCATION_FAILED,
+    BEFORE_PICKED_UP
+}

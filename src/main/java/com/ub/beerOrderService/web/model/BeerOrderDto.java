@@ -1,7 +1,7 @@
 package com.ub.beerOrderService.web.model;
 
 import com.fasterxml.jackson.annotation.JsonAlias;
-import com.ub.beerOrderService.domain.OrderStatusEnum;
+import com.ub.beerOrderService.domain.BeerOrderStatusEnum;
 import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -22,12 +22,12 @@ public class BeerOrderDto extends BaseItem {
 
     @JsonAlias("list of orders")
     private List<BeerOrderLineDto> beerOrderLines;
-    private OrderStatusEnum orderStatus;
+    private BeerOrderStatusEnum orderStatus;
     private String orderStatusCallbackUrl;
 
     @Builder
     public BeerOrderDto(UUID id, Integer version, OffsetDateTime createdDate, OffsetDateTime lastModifiedDate,
-                        UUID customerId, String customerRef, List<BeerOrderLineDto> beerOrderLines, OrderStatusEnum orderStatus, String orderStatusCallbackUrl) {
+                        UUID customerId, String customerRef, List<BeerOrderLineDto> beerOrderLines, BeerOrderStatusEnum orderStatus, String orderStatusCallbackUrl) {
         super(id, version, createdDate, lastModifiedDate);
         this.customerId = customerId;
         this.customerRef = customerRef;
