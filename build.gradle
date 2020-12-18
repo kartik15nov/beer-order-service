@@ -32,6 +32,7 @@ dependencies {
     implementation "javax.xml.bind:jaxb-api:${jaxbVersion}"
     implementation "com.sun.xml.bind:jaxb-core:${jaxbVersion}"
     implementation "com.sun.xml.bind:jaxb-impl:${jaxbVersion}"
+    implementation 'org.springframework.statemachine:spring-statemachine-core:2.2.1.RELEASE'
 
     compileOnly "org.projectlombok:lombok"
     developmentOnly "org.springframework.boot:spring-boot-devtools"
