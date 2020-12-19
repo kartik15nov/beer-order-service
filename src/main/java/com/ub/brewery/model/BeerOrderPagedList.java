@@ -1,4 +1,4 @@
-package com.ub.beerOrderService.web.model;
+package com.ub.brewery.model;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;

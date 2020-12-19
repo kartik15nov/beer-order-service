@@ -1,4 +1,4 @@
-package com.ub.beerOrderService.web.model;
+package com.ub.brewery.model;
 
 import com.fasterxml.jackson.annotation.JsonAlias;
 import lombok.Builder;

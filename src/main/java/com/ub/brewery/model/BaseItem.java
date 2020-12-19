@@ -1,33 +1,33 @@
-package com.ub.beerOrderService.services.beerService.model;
+package com.ub.brewery.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-import java.math.BigDecimal;
 import java.time.OffsetDateTime;
 import java.util.UUID;
 
-@Data
+@Setter
+@Getter
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
-public class BeerDto {
-    private UUID id;
+public class BaseItem {
+
+    @JsonProperty("id")
+    private UUID id = null;
+
+    @JsonProperty("version")
     private Integer version;
 
     @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ssZ", shape = JsonFormat.Shape.STRING)
+    @JsonProperty("createdDate")
     private OffsetDateTime createdDate;
 
     @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ssZ", shape = JsonFormat.Shape.STRING)
+    @JsonProperty("lastModifiedDate")
     private OffsetDateTime lastModifiedDate;
-    private String beerName;
-    private String beerStyle;
-    private String upc;
-    private Integer quantityOnHand;
 
-    @JsonFormat(shape = JsonFormat.Shape.STRING)
-    private BigDecimal price;
 }

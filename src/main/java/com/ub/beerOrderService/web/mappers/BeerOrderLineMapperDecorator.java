@@ -1,9 +1,9 @@
 package com.ub.beerOrderService.web.mappers;
 
 import com.ub.beerOrderService.domain.BeerOrderLine;
-import com.ub.beerOrderService.services.beerService.model.BeerDto;
-import com.ub.beerOrderService.services.beerService.service.BeerService;
-import com.ub.beerOrderService.web.model.BeerOrderLineDto;
+import com.ub.brewery.model.BeerDto;
+import com.ub.beerOrderService.services.beerService.BeerService;
+import com.ub.brewery.model.BeerOrderLineDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 

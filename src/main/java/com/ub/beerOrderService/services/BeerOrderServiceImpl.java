@@ -1,4 +1,4 @@
-package com.ub.beerOrderService.services.beerOrderService;
+package com.ub.beerOrderService.services;
 
 import com.ub.beerOrderService.domain.BeerOrder;
 import com.ub.beerOrderService.domain.Customer;
@@ -6,8 +6,8 @@ import com.ub.beerOrderService.domain.BeerOrderStatusEnum;
 import com.ub.beerOrderService.repositories.BeerOrderRepository;
 import com.ub.beerOrderService.repositories.CustomerRepository;
 import com.ub.beerOrderService.web.mappers.BeerOrderMapper;
-import com.ub.beerOrderService.web.model.BeerOrderDto;
-import com.ub.beerOrderService.web.model.BeerOrderPagedList;
+import com.ub.brewery.model.BeerOrderDto;
+import com.ub.brewery.model.BeerOrderPagedList;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.data.domain.Page;

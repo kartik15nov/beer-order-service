@@ -1,8 +1,8 @@
 package com.ub.beerOrderService.web.controller;
 
-import com.ub.beerOrderService.services.beerOrderService.BeerOrderService;
-import com.ub.beerOrderService.web.model.BeerOrderDto;
-import com.ub.beerOrderService.web.model.BeerOrderPagedList;
+import com.ub.beerOrderService.services.BeerOrderService;
+import com.ub.brewery.model.BeerOrderDto;
+import com.ub.brewery.model.BeerOrderPagedList;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;

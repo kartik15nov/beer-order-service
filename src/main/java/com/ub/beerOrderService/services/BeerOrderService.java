@@ -1,7 +1,7 @@
-package com.ub.beerOrderService.services.beerOrderService;
+package com.ub.beerOrderService.services;
 
-import com.ub.beerOrderService.web.model.BeerOrderDto;
-import com.ub.beerOrderService.web.model.BeerOrderPagedList;
+import com.ub.brewery.model.BeerOrderDto;
+import com.ub.brewery.model.BeerOrderPagedList;
 import org.springframework.data.domain.Pageable;
 
 import java.util.UUID;

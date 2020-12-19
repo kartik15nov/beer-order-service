@@ -1,4 +1,4 @@
-package com.ub.beerOrderService.web.model;
+package com.ub.brewery.model;
 
 import lombok.Builder;
 import lombok.Data;
