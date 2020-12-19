@@ -1,8 +1,10 @@
 package com.ub.brewery.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
@@ -11,25 +13,28 @@ import java.util.UUID;
 
 @Data
 @NoArgsConstructor
-@EqualsAndHashCode(callSuper = true)
-public class BeerOrderLineDto extends BaseItem {
+@AllArgsConstructor
+@Builder
+public class BeerOrderLineDto {
+
+    @JsonProperty("id")
+    private UUID id;
+
+    @JsonProperty("version")
+    private Integer version;
+
+    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ssZ", shape = JsonFormat.Shape.STRING)
+    @JsonProperty("createdDate")
+    private OffsetDateTime createdDate;
+
+    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ssZ", shape = JsonFormat.Shape.STRING)
+    @JsonProperty("lastModifiedDate")
+    private OffsetDateTime lastModifiedDate;
 
     private UUID beerId;
     private String upc;
     private String beerName;
     private String beerStyle;
-    private Integer orderQuantity = 0;
+    private Integer orderQuantity;
     private BigDecimal price;
-
-    @Builder
-    public BeerOrderLineDto(UUID id, Integer version, OffsetDateTime createdDate, OffsetDateTime lastModifiedDate,
-                            UUID beerId, String upc, String beerName, String beerStyle, Integer orderQuantity, BigDecimal price) {
-        super(id, version, createdDate, lastModifiedDate);
-        this.beerId = beerId;
-        this.upc = upc;
-        this.beerName = beerName;
-        this.beerStyle = beerStyle;
-        this.orderQuantity = orderQuantity;
-        this.price = price;
-    }
 }
