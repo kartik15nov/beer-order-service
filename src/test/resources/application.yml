@@ -1,0 +1,6 @@
+logging:
+  level:
+    com.ub: debug
+com:
+  ub:
+    beer-service-host: http://localhost:8083

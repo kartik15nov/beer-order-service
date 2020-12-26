@@ -21,6 +21,9 @@ configurations {
 
 repositories {
     mavenCentral()
+    maven {
+        url = "https://jitpack.io"
+    }
 }
 
 dependencies {
@@ -28,22 +31,23 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     implementation 'org.springframework.boot:spring-boot-starter-artemis'
     implementation 'org.springframework.boot:spring-boot-starter-web'
-    implementation "org.mapstruct:mapstruct:${mapstructVersion}"
-    implementation "javax.xml.bind:jaxb-api:${jaxbVersion}"
-    implementation "com.sun.xml.bind:jaxb-core:${jaxbVersion}"
-    implementation "com.sun.xml.bind:jaxb-impl:${jaxbVersion}"
     implementation 'org.springframework.statemachine:spring-statemachine-core:2.2.1.RELEASE'
+    implementation "org.mapstruct:mapstruct:${mapstructVersion}"
+    implementation "org.projectlombok:lombok"
 
-    compileOnly "org.projectlombok:lombok"
     developmentOnly "org.springframework.boot:spring-boot-devtools"
     runtimeOnly "com.h2database:h2"
     runtimeOnly "mysql:mysql-connector-java"
 
     annotationProcessor "org.projectlombok:lombok"
     annotationProcessor "org.mapstruct:mapstruct-processor:${mapstructVersion}"
-    annotationProcessor "org.springframework.boot:spring-boot-configuration-processor"
+    testAnnotationProcessor "org.projectlombok:lombok"
 
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation "com.github.JensPiegsa:wiremock-extension:0.4.0"
+    testImplementation 'org.awaitility:awaitility:4.0.3'
+
+    testRuntime "org.apache.activemq:artemis-jms-server"
 
     tasks.withType(JavaCompile) {
         options.compilerArgs = [
