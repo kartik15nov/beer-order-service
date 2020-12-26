@@ -42,6 +42,7 @@ dependencies {
     annotationProcessor "org.projectlombok:lombok"
     annotationProcessor "org.mapstruct:mapstruct-processor:${mapstructVersion}"
     testAnnotationProcessor "org.projectlombok:lombok"
+    testAnnotationProcessor "org.mapstruct:mapstruct-processor:${mapstructVersion}"
 
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation "com.github.JensPiegsa:wiremock-extension:0.4.0"

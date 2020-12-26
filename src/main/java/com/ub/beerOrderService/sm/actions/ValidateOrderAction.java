@@ -37,7 +37,7 @@ public class ValidateOrderAction implements Action<BeerOrderStatusEnum, BeerOrde
                     ValidateOrderRequest.builder()
                             .beerOrderDto(beerOrderMapper.beerOrderToDto(beerOrder))
                             .build());
-            log.debug("Sent Validation request fo queue for order id: {}", beerOrderId);
+            log.debug("Sent Validation request to queue for order id: {}", beerOrderId);
         }, () -> log.error("OrderId Not Found for ValidationOrderAction: {}", beerOrderId));
     }
 }
