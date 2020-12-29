@@ -16,9 +16,10 @@ import org.springframework.statemachine.support.DefaultStateMachineContext;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.persistence.EntityManager;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.atomic.AtomicInteger;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -29,7 +30,6 @@ public class BeerOrderManagerImpl implements BeerOrderManager {
     private final StateMachineFactory<BeerOrderStatusEnum, BeerOrderEventEnum> stateMachineFactory;
     private final BeerOrderRepository beerOrderRepository;
     private final BeerOrderStateChangeInterceptor beerOrderStateChangeInterceptor;
-    private final EntityManager entityManager;
 
     @Transactional
     @Override
@@ -45,8 +45,6 @@ public class BeerOrderManagerImpl implements BeerOrderManager {
     @Transactional
     @Override
     public void processValidationResult(UUID beerOrderId, Boolean isValid) {
-        entityManager.flush();
-
         log.debug("Process Validation Result for beerOrderId: {}, isValid? {}", beerOrderId, isValid);
 
         Optional<BeerOrder> beerOrderOptional = beerOrderRepository.findById(beerOrderId);
@@ -54,6 +52,9 @@ public class BeerOrderManagerImpl implements BeerOrderManager {
         beerOrderOptional.ifPresentOrElse(beerOrder -> {
             if (isValid) {
                 sendBeerOrderEvent(beerOrder, BeerOrderEventEnum.VALIDATE_PASSED);
+
+                //Wait for status change
+                awaitForStatusChange(beerOrderId, BeerOrderStatusEnum.VALIDATED);
 
                 Optional<BeerOrder> beerOrderOptional1 = beerOrderRepository.findById(beerOrderId);
 
@@ -70,6 +71,7 @@ public class BeerOrderManagerImpl implements BeerOrderManager {
 
         beerOrderOptional.ifPresentOrElse(beerOrder -> {
             sendBeerOrderEvent(beerOrder, BeerOrderEventEnum.ALLOCATION_SUCCESS);
+            awaitForStatusChange(beerOrder.getId(), BeerOrderStatusEnum.ALLOCATED);
             updateAllocatedQty(beerOrderDto);
         }, () -> log.error("OrderId Not Found for beerOrderAllocationPassed: {}", beerOrderDto.getId()));
     }
@@ -80,6 +82,7 @@ public class BeerOrderManagerImpl implements BeerOrderManager {
 
         beerOrderOptional.ifPresentOrElse(beerOrder -> {
             sendBeerOrderEvent(beerOrder, BeerOrderEventEnum.ALLOCATION_NO_INVENTORY);
+            awaitForStatusChange(beerOrder.getId(), BeerOrderStatusEnum.PENDING_INVENTORY);
             updateAllocatedQty(beerOrderDto);
         }, () -> log.error("OrderId Not Found for beerOrderAllocationPendingInventory: {}", beerOrderDto.getId()));
     }
@@ -106,6 +109,37 @@ public class BeerOrderManagerImpl implements BeerOrderManager {
 
         beerOrderOptional.ifPresentOrElse(beerOrder -> sendBeerOrderEvent(beerOrder, BeerOrderEventEnum.CANCEL_ORDER),
                 () -> log.error("OrderId Not Found for cancelOrder: {}", beerOrderId));
+    }
+
+    private void awaitForStatusChange(UUID beerOrderId, BeerOrderStatusEnum statusEnum) {
+        AtomicBoolean found = new AtomicBoolean(false);
+        AtomicInteger loopCount = new AtomicInteger(0);
+
+        while (!found.get()) {
+            if (loopCount.incrementAndGet() > 10) {
+                found.set(true);
+                log.debug("Loop Retries exceeded");
+            }
+
+            beerOrderRepository.findById(beerOrderId)
+                    .ifPresentOrElse(beerOrder -> {
+                        if (beerOrder.getOrderStatus().equals(statusEnum)) {
+                            found.set(true);
+                            log.debug("Order Found");
+                        } else {
+                            log.debug("Order Status Not Equal. Expected: " + statusEnum.name() + " Found: " + beerOrder.getOrderStatus().name());
+                        }
+                    }, () -> log.debug("Order Id Not Found"));
+
+            if (!found.get()) {
+                try {
+                    log.debug("Sleeping for retry");
+                    Thread.sleep(100);
+                } catch (Exception e) {
+                    // do nothing
+                }
+            }
+        }
     }
 
     private void updateAllocatedQty(BeerOrderDto beerOrderDto) {
