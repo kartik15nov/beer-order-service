@@ -10,8 +10,6 @@ import org.springframework.jms.core.JmsTemplate;
 import org.springframework.messaging.Message;
 import org.springframework.stereotype.Component;
 
-import java.util.Objects;
-
 @Slf4j
 @RequiredArgsConstructor
 @Component
@@ -23,16 +21,25 @@ class BeerOrderValidationListener {
     public void list(Message<ValidateOrderRequest> message) {
 
         boolean isValid = true;
+        boolean sendResponse = true;
 
         ValidateOrderRequest orderRequest = message.getPayload();
 
-        if (orderRequest.getBeerOrderDto().getCustomerRef() != null && Objects.equals(orderRequest.getBeerOrderDto().getCustomerRef(), "fail-validation"))
-            isValid = false;
+        String customerRef = orderRequest.getBeerOrderDto().getCustomerRef();
 
-        jmsTemplate.convertAndSend(JMSConfig.VALIDATE_ORDER_RESPONSE_QUEUE,
-                ValidateOrderResult.builder()
-                        .isValid(isValid)
-                        .orderId(orderRequest.getBeerOrderDto().getId())
-                        .build());
+        if (customerRef != null) {
+            if (customerRef.equals("fail-validation"))
+                isValid = false;
+            else if (customerRef.equals("dont-validate"))
+                sendResponse = false;
+        }
+
+        if (sendResponse) {
+            jmsTemplate.convertAndSend(JMSConfig.VALIDATE_ORDER_RESPONSE_QUEUE,
+                    ValidateOrderResult.builder()
+                            .isValid(isValid)
+                            .orderId(orderRequest.getBeerOrderDto().getId())
+                            .build());
+        }
     }
 }
