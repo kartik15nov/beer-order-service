@@ -30,5 +30,5 @@ public class CustomerDto {
     @JsonProperty("lastModifiedDate")
     private OffsetDateTime lastModifiedDate;
 
-    private String name;
+    private String customerName;
 }
