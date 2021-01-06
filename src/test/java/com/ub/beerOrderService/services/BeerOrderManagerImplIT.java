@@ -29,8 +29,7 @@ import java.util.Set;
 import java.util.UUID;
 
 import static com.github.jenspiegsa.wiremockextension.ManagedWireMockServer.with;
-import static com.github.tomakehurst.wiremock.client.WireMock.get;
-import static com.github.tomakehurst.wiremock.client.WireMock.okJson;
+import static com.github.tomakehurst.wiremock.client.WireMock.*;
 import static com.github.tomakehurst.wiremock.core.WireMockConfiguration.wireMockConfig;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.awaitility.Awaitility.await;
@@ -109,7 +108,7 @@ class BeerOrderManagerImplIT {
                 .upc("12345")
                 .build();
 
-        wireMockServer.stubFor(get(BeerServiceImpl.BEER_UPC_PATH_V1 + "12345")
+        wireMockServer.stubFor(get(urlPathMatching(BeerServiceImpl.BEER_UPC_PATH_V1 + ".*"))
                 .willReturn(okJson(objectMapper.writeValueAsString(beerDto))));
 
         BeerOrder beerOrder = createBeerOrder();
@@ -295,7 +294,7 @@ class BeerOrderManagerImplIT {
             assertEquals(BeerOrderStatusEnum.CANCELLED, foundOrder.getOrderStatus());
         });
 
-        DeAllocateOrderRequest deAllocateOrderRequest= (DeAllocateOrderRequest) jmsTemplate.receiveAndConvert(JMSConfig.DEALLOCATE_ORDER_QUEUE);
+        DeAllocateOrderRequest deAllocateOrderRequest = (DeAllocateOrderRequest) jmsTemplate.receiveAndConvert(JMSConfig.DEALLOCATE_ORDER_QUEUE);
 
         assertNotNull(deAllocateOrderRequest);
         assertThat(deAllocateOrderRequest.getBeerOrderDto().getId()).isEqualTo(savedBeerOrder.getId());
