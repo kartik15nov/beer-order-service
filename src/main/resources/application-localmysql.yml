@@ -1,14 +1,17 @@
+server:
+  port: 8081
+
 logging:
   level:
     com.ub: debug
-server:
-  port: 8081
 
 com:
   ub:
     beer-service-host: http://localhost:8080
 
 spring:
+  application:
+    name: order-service
   datasource:
     url: jdbc:mysql://127.0.0.1:3306/beer_order_service_db?useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC
     username: beer_order_service_user
