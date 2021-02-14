@@ -9,6 +9,8 @@ com:
     beer-service-host: http://localhost:8080
 
 spring:
+  application:
+    name: order-service
   datasource:
     initialization-mode: embedded
     url: jdbc:h2:mem:testdb;MODE=MYSQL

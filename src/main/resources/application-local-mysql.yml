@@ -36,3 +36,8 @@ spring:
     properties:
       hibernate:
         dialect: org.hibernate.dialect.MySQL8Dialect
+
+  cloud:
+    config:
+      discovery:
+        enabled: false
